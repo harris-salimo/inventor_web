@@ -5,7 +5,6 @@ import type { Config } from 'ziggy-js'
 export interface Auth {
   user: User
   token: string
-  [key: string]: any
 }
 
 export interface BreadcrumbItem {

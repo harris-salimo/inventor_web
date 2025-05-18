@@ -13,6 +13,7 @@ import { useLogin } from '@/composables/useLogin'
 import { Input } from '@/components/ui/input'
 import AppLogoIcon from '@/components/AppLogoIcon.vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 
 const schema = toTypedSchema(
   z.object({
@@ -22,6 +23,7 @@ const schema = toTypedSchema(
   }),
 )
 
+const { setAuth } = useAuth()
 const router = useRouter()
 const canResetPassword = ref<boolean | null>(false)
 const statusError = ref<string | undefined>(undefined)
@@ -40,8 +42,9 @@ watch(isError, async (state, oldState) => {
 
 const submit = handleSubmit(async (values) => {
   login(values, {
-    onSuccess: () => {
-      // router.replace({ name: 'home-view' })
+    onSuccess: (data) => {
+      setAuth({ token: data.token })
+      router.replace({ name: 'home-view' })
     },
   })
 })
