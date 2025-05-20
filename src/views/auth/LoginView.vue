@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -9,7 +9,6 @@ import AppPasswordInput from '@/components/AppPasswordInput.vue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { LoaderCircle } from 'lucide-vue-next'
-import { useLogin } from '@/composables/useLogin'
 import { Input } from '@/components/ui/input'
 import AppLogoIcon from '@/components/AppLogoIcon.vue'
 import { useRouter } from 'vue-router'
@@ -23,7 +22,7 @@ const schema = toTypedSchema(
   }),
 )
 
-const { setAuth } = useAuth()
+const { setAuth, isLoading, isSuccess, data, login, isError, error } = useAuth()
 const router = useRouter()
 const canResetPassword = ref<boolean | null>(false)
 const statusError = ref<string | undefined>(undefined)
@@ -32,18 +31,10 @@ const { handleSubmit, setErrors } = useForm({
   validationSchema: schema,
 })
 
-const { isLoading, isSuccess, data, login, isError, error } = useLogin()
-
-watch(isError, async (state, oldState) => {
-  if (state) {
-    console.error(error.value)
-  }
-})
-
 const submit = handleSubmit(async (values) => {
   login(values, {
     onSuccess: (data) => {
-      setAuth({ user: data.user })
+      setAuth({ user: data.user, token: data.token })
       router.replace({ name: 'home-view' })
     },
   })

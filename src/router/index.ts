@@ -47,7 +47,7 @@ export default router
 
 router.beforeEach((to, from, next) => {
   const { auth } = useAuth()
-  const isAuthenticated = !!auth.value.user
+  const isAuthenticated = !!auth.value.token && !!auth.value.user
 
   if (!isAuthenticated && to.meta.requireAuth) {
     next({ name: 'login-view' })

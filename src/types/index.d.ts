@@ -4,6 +4,7 @@ import type { Config } from 'ziggy-js'
 
 export interface Auth {
   user: User
+  token: string
 }
 
 export interface BreadcrumbItem {
@@ -26,14 +27,40 @@ export interface SharedData extends PageProps {
   sidebarOpen: boolean
 }
 
-export interface User {
+export interface Role {
   id: number
   name: string
+  description?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface User {
+  id: number
+  fullName: string
   email: string
   avatar?: string
-  email_verified_at: string | null
-  created_at: string
-  updated_at: string
+  role: Role
+  emailVerifiedAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Category {
+  id: number
+  name: string
+  description?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Item {
+  id: number
+  name: string
+  description?: string
+  statusColor: string
+  createdAt: string
+  updatedAt: string
 }
 
 export type BreadcrumbItemType = BreadcrumbItem

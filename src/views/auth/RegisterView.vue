@@ -5,11 +5,10 @@ import TextLink from '@/components/TextLink.vue'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useRegister } from '@/composables/useRegister'
+import { useAuth } from '@/composables/useAuth'
 import { toTypedSchema } from '@vee-validate/zod'
 import { LoaderCircle } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
 
@@ -30,7 +29,7 @@ const { handleSubmit } = useForm({
   validationSchema: schema,
 })
 
-const { isLoading, isSuccess, data, register } = useRegister()
+const { isLoading, isSuccess, data, register } = useAuth()
 
 const submit = handleSubmit(async (values) => {
   register(values, {
