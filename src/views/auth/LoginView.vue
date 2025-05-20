@@ -43,7 +43,7 @@ watch(isError, async (state, oldState) => {
 const submit = handleSubmit(async (values) => {
   login(values, {
     onSuccess: (data) => {
-      setAuth({ token: data.token })
+      setAuth({ user: data.user })
       router.replace({ name: 'home-view' })
     },
   })
